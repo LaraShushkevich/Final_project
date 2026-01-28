@@ -1,6 +1,6 @@
 import uuid
 import allure
-from api import ProjectApi
+from api.ProjectApi import ProjectApi
 
 base_url = "https://ru.yougile.com/api-v2/projects"
 
