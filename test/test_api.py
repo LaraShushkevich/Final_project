@@ -1,10 +1,12 @@
 import uuid
 import allure
+import pytest
 from api.ProjectApi import ProjectApi
 
 base_url = "https://ru.yougile.com/api-v2/projects"
 
 
+@pytest.mark.api
 @allure.title("Создание проекта")
 @allure.suite("API тесты")
 @allure.description("Проверка создания проекта")
@@ -23,6 +25,7 @@ def test_create_project(headers, api: ProjectApi):
     assert len(list_after) - len(list_before) == 1
 
 
+@pytest.mark.api
 @allure.title("Изменение проекта")
 @allure.suite("API тесты")
 @allure.description("Проверка возможности редактирования проекта")
@@ -35,6 +38,7 @@ def test_update_project(headers: dict, api: ProjectApi, project_id):
     assert response == 200
 
 
+@pytest.mark.api
 @allure.title("Получение проекта по id")
 @allure.suite("API тесты")
 @allure.description("Проверка возможности получения проекта по id")
@@ -45,6 +49,7 @@ def test_get_project_by_id(headers: dict, api: ProjectApi, project_id):
     assert response == project_id
 
 
+@pytest.mark.api
 @allure.title("Получение проекта по неверному id")
 @allure.suite("API тесты")
 @allure.description("Негативная проверка")
@@ -55,6 +60,8 @@ def test_get_project_by_id_negative(headers: dict, api: ProjectApi):
     response = api.get_project_by_invalid_id(base_url, headers, invalid_id)
     assert response == 404
 
+
+@pytest.mark.api
 @allure.title("Получение проекта по неверному id")
 @allure.suite("API тесты")
 @allure.description("Негативная проверка")

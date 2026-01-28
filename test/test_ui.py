@@ -1,4 +1,5 @@
 import allure
+import pytest
 from page.AuthPage import AuthPage
 from page.ProjectPage import ProjectPage
 
@@ -9,6 +10,7 @@ invalid_email = "invalid@example.com"
 empty_password = ""
 
 
+@pytest.mark.ui
 @allure.title("Успешная авторизация")
 @allure.suite("UI тесты")
 @allure.description("Проверка авторизации с валидными данными")
@@ -25,6 +27,7 @@ def test_valid_login(driver):
     assert auth_page.get_current_url().endswith('team')
 
 
+@pytest.mark.ui
 @allure.title("Неверный email")
 @allure.suite("UI тесты")
 @allure.description("Проверка авторизации с неверным email")
@@ -41,6 +44,7 @@ def test_invalid_email(driver):
     assert err == 'Неверный e-mail или пароль'
 
 
+@pytest.mark.ui
 @allure.title("Пустой пароль")
 @allure.suite("UI тесты")
 @allure.description("Проверка авторизации с пустым паролем")
@@ -57,6 +61,7 @@ def test_empty_password(driver):
     assert err == 'Incorrect request'
 
 
+@pytest.mark.ui
 @allure.title("Пустые email и пароль")
 @allure.suite("UI тесты")
 @allure.description("Проверка авторизации с пустым email и паролем")
@@ -73,6 +78,7 @@ def test_empty_credentials(driver):
     assert err == 'Неверный e-mail или пароль'
 
 
+@pytest.mark.ui
 @allure.title("Переход на страницу проектов")
 @allure.suite("UI тесты")
 @allure.description("Проверка перехода на страницу проектов после авторизации")
