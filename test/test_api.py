@@ -2,8 +2,10 @@ import uuid
 import allure
 import pytest
 from api.ProjectApi import ProjectApi
+from configuration.ConfigProvider import ConfigProvider
+# from testdata import DataProvider
 
-base_url = "https://ru.yougile.com/api-v2/projects"
+base_url = ConfigProvider().get_api_url()
 
 
 @pytest.mark.api
@@ -12,7 +14,7 @@ base_url = "https://ru.yougile.com/api-v2/projects"
 @allure.description("Проверка создания проекта")
 @allure.feature("Работа с проектами")
 @allure.severity("critical")
-def test_create_project(headers, api: ProjectApi):
+def test_create_project(headers: dict, api: ProjectApi):
     project = {
         "title": "New Project",
         "users": {

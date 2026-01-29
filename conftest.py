@@ -3,13 +3,16 @@ import pytest
 import requests
 from selenium import webdriver
 from api.ProjectApi import ProjectApi
+from testdata.DataProvider import DataProvider
+from configuration.ConfigProvider import ConfigProvider
 
 
 @pytest.fixture
 def driver():
     with allure.step("Открыть и настроить браузер"):
+        time_out = ConfigProvider().getint("ui", "time_out")
         driver = webdriver.Chrome()
-        driver.implicitly_wait(4)
+        driver.implicitly_wait(time_out)
         driver.maximize_window()
         yield driver
     with allure.step("Закрыть браузер"):
@@ -18,7 +21,7 @@ def driver():
 
 @pytest.fixture
 def headers():
-    token = "sD+ywZV5dfIyWZonOGrTbIkTTIb9DBhfuoBJhdraOAJYQe0PhFSGCIhCzBcmel47"
+    token = DataProvider().get("token")
     return {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json"
@@ -27,8 +30,8 @@ def headers():
 
 @pytest.fixture
 def api() -> ProjectApi:
-    base_url = "https://ru.yougile.com/api-v2/projects"
-    token = "sD+ywZV5dfIyWZonOGrTbIkTTIb9DBhfuoBJhdraOAJYQe0PhFSGCIhCzBcmel47"
+    base_url = ConfigProvider().get_api_url()
+    token = DataProvider().get("token")
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json"
@@ -37,13 +40,11 @@ def api() -> ProjectApi:
 
 
 @pytest.fixture
-def project_id(headers) -> str:
-    base_url = "https://ru.yougile.com/api-v2/projects"
+def project_id(headers):
+    base_url = ConfigProvider().get_api_url()
     project = {
         "title": "For use",
-        "users": {
-            "0850e032-1491-4909-969d-949e427e2246": "admin"
-        }
+        "users": DataProvider().get("users")
     }
     response = requests.post(base_url, json=project, headers=headers)
     project_id = response.json().get("id")

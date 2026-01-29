@@ -2,6 +2,10 @@ import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
+from configuration.ConfigProvider import ConfigProvider
+
+
+base_url = ConfigProvider().get_ui_url()
 
 
 class ProjectPage:
@@ -9,7 +13,7 @@ class ProjectPage:
             для открытия страницы и получения текущего url"""
 
     def __init__(self, driver: WebDriver) -> None:
-        self.__url = "https://ru.yougile.com/team"
+        self.__url = base_url
         self.__driver = driver
         self.wait = WebDriverWait(driver, 10)
 

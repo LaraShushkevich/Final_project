@@ -3,6 +3,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from configuration.ConfigProvider import ConfigProvider
+
+
+base_url = ConfigProvider().get_ui_url()
 
 
 class AuthPage:
@@ -12,7 +16,7 @@ class AuthPage:
         об ошибке при вводе невалидных данных"""
 
     def __init__(self, driver: WebDriver) -> None:
-        self.__url = "https://ru.yougile.com/team"
+        self.__url = base_url
         self.__driver = driver
         self.wait = WebDriverWait(driver, 10)
 
@@ -30,18 +34,18 @@ class AuthPage:
 
     @allure.step("Ввод email")
     def enter_email(self, email: str) -> None:
-        """Метод находит на странице поле для ввода email, 
+        """Метод находит на странице поле для ввода email,
         очищает его, заполняет заданным email"""
-        email_field = self.__driver.find_element(By.CSS_SELECTOR, 
+        email_field = self.__driver.find_element(By.CSS_SELECTOR,
                                                  '[type="email"]')
         email_field.clear()
         email_field.send_keys(email)
 
     @allure.step("Ввод пароля")
     def enter_password(self, password: str) -> None:
-        """Метод находит на странице поле для ввода пароля, 
+        """Метод находит на странице поле для ввода пароля,
         очищает его, заполняет заданным паролем"""
-        password_field = self.__driver.find_element(By.CSS_SELECTOR, 
+        password_field = self.__driver.find_element(By.CSS_SELECTOR,
                                                     '[type="password"]')
         password_field.clear()
         password_field.send_keys(password)
@@ -75,7 +79,7 @@ class AuthPage:
     @allure.step("Получение текста сообщения об ошибке")
     def get_error_message(self) -> str:
         """Метод возвращает текст сообщения об ошибке"""
-        error_text = self.__driver.find_element(By.XPATH,
-                                                '//*[@id="root"]/div/div/'
-                                                'div[1]/div/div[1]/form/div[4]')
-        return error_text.text
+        err_text = self.__driver.find_element(By.XPATH,
+                                              '//*[@id="root"]/div/div/'
+                                              'div[1]/div/div[1]/form/div[4]')
+        return err_text.text

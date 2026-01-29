@@ -2,12 +2,13 @@ import allure
 import pytest
 from page.AuthPage import AuthPage
 from page.ProjectPage import ProjectPage
+from testdata.DataProvider import DataProvider
 
 
-valid_email = "LaraShushkevich@yandex.ru"
-valid_password = "_v8Avtn!n3UNGxM"
-invalid_email = "invalid@example.com"
-empty_password = ""
+valid_email = DataProvider().get("valid_email")
+valid_password = DataProvider().get("valid_password")
+invalid_email = DataProvider().get("invalid_email")
+empty_password = DataProvider().get("empty_password")
 
 
 @pytest.mark.ui
