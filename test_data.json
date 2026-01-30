@@ -1,0 +1,10 @@
+{
+    "token": "sD+ywZV5dfIyWZonOGrTbIkTTIb9DBhfuoBJhdraOAJYQe0PhFSGCIhCzBcmel47",
+    "valid_email": "LaraShushkevich@yandex.ru",
+    "valid_password": "_v8Avtn!n3UNGxM",
+    "invalid_email": "invalid@example.com",
+    "empty_password": "",
+    "users": {
+            "0850e032-1491-4909-969d-949e427e2246": "admin"
+        }
+}
